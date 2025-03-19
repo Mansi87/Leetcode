@@ -1,8 +1,6 @@
 class Solution {
-    int cnt = 0;
     public int reversePairs(int[] nums) {
-        mergeSort(nums, 0, nums.length-1);
-        return cnt;
+        return mergeSort(nums, 0, nums.length-1);
     }
     
     private void merge(int[] arr, int low, int mid, int high) {
@@ -31,19 +29,23 @@ class Solution {
             arr[i] = temp.get(i - low);
         }
     }
-    private void countPairs(int[]arr, int low, int mid, int high){
+    int countPairs(int[]arr, int low, int mid, int high){
+        int cnt = 0;
         int right = mid+1;
         for(int i=low; i<=mid; i++){
             while(right<=high && arr[i]> 2L * arr[right]) right++;
             cnt += (right - (mid+1));
         }
+        return cnt;
     }
-    public void mergeSort(int[] arr, int low, int high) {
-        if (low >= high) return;
+    int mergeSort(int[] arr, int low, int high) {
+        int cnt = 0;
+        if (low >= high) return cnt;
         int mid = (low + high) / 2 ;
-        mergeSort(arr, low, mid);  // left half
-        mergeSort(arr, mid + 1, high); // right half
-        countPairs(arr, low, mid ,high);
+        cnt += mergeSort(arr, low, mid);  // left half
+        cnt += mergeSort(arr, mid + 1, high); // right half
+        cnt += countPairs(arr, low, mid ,high);
         merge(arr, low, mid, high);  // merging sorted halves
+        return cnt;
     }
 }
