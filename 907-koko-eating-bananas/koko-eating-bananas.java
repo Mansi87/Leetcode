@@ -1,33 +1,21 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int low = 1;
-        int high = findMax(piles);
-        while(low <= high){
-            int mid = (low+high)/2;
-            int totalhr = func(piles, mid);
-            if(totalhr <= h){
-                high = mid-1;
+        int n = piles.length;
+        long total = 0;
+        for(int p:piles){
+            total += p;
+        }
+        int low = (int)((total-1)/h) + 1;
+        int high = (int)((total-n)/(h-n+1)) + 1;
+        while(low<high){
+            int mid = low+(high-low)/2;
+            int time = 0;
+            for(int p: piles){
+                time += (p-1)/mid +1;
             }
-            else{
-                low = mid+1;
-            }
+            if(time>h)  low = mid+1;
+            else high = mid; 
         }
         return low;
-    }
-
-    public int func(int[]arr, int hr){
-        int totalhr = 0;
-        for(int i =0; i<arr.length; i++){
-            totalhr += Math.ceil((double)arr[i]/hr);
-        }
-        return totalhr;
-    }
-
-    public int findMax(int[] arr){
-        int maxi = Integer.MIN_VALUE;
-        for(int i=0; i<arr.length; i++){
-            maxi = Math.max(maxi, arr[i]);
-        }
-        return maxi;
     }
 }
