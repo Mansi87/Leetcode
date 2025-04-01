@@ -1,11 +1,14 @@
 class Solution {
     public int minDays(int[] bloomDay, int m, int k) {
         if(bloomDay.length < (long)m*k)  return -1;
-
-        int low = Arrays.stream(bloomDay).min().getAsInt();
-        int high = Arrays.stream(bloomDay).max().getAsInt();
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+        for(int day: bloomDay){
+            if(day>high) high = day;
+            if(day<low) low = day;
+        }
         while(low<=high){
-            int mid = (low+high)/2;
+            int mid = low+(high-low)/2;
             if(possible(bloomDay,mid,m,k)){
                 high = mid-1;
             }
@@ -22,13 +25,17 @@ class Solution {
         for(int i=0; i<arr.length; i++){
             if(arr[i]<=day){
                 cnt++;
+                if(cnt == k){
+                    nofb++;
+                    cnt = 0;
+                    if(nofb == m) return true;
+                }
             }
             else{
-                nofb += (cnt/k);
                 cnt = 0;
+                if(arr.length - i <(m-nofb)*k) return false;
             }
         }
-        nofb += (cnt/k);
-        return nofb >= m;
+       return false;
     }
 }
