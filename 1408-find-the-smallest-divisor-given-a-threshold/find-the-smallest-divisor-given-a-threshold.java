@@ -1,5 +1,6 @@
 class Solution {
     public int smallestDivisor(int[] nums, int threshold) {
+        if(nums.length > threshold) return -1;
         int low = 1;
         int high = Integer.MIN_VALUE;
         for(int num: nums){
@@ -17,11 +18,11 @@ class Solution {
         return low;
     }
 
-    public int sumofD(int[]arr, int div){
-        int sum = 0;
-        for(int i=0; i<arr.length; i++){
-            sum += Math.ceil((double)(arr[i])/(double)(div));
+    public int sumofD(int[]nums, int mid){
+        double sum = 0;
+        for(int i: nums){
+            sum += Math.ceilDiv(i, mid);
         }
-        return sum;
+        return (int)sum;
     }
 }
