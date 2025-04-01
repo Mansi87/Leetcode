@@ -1,12 +1,14 @@
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
-        int low = 1;
+        int heavy = 0;
         int sum = 0;
         for(int weight: weights){
-            if(weight>low)  low = weight;
             sum += weight;
+            heavy = Math.max(heavy, weight);
         }
-        int high = sum;
+
+        int low = Math.max(heavy, sum/days);
+        int high = heavy * (int) Math.ceil((double)weights.length/days);
 
         while(low<high){
             int mid = low+(high-low)/2;
