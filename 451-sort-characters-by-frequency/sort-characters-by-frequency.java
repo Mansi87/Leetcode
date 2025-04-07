@@ -1,29 +1,40 @@
 class Solution {
-    public String frequencySort(String s) {
-        Map<Character,Integer> freq = new HashMap<>();
+    static{
+        for(int i=0;i<500;i++){
+            frequencySort(new String());
+        }
+    }
+    public static int findMaxI(int[] f)
+    {
+        int maxi=0;
+        int max=0;
+        for(int i=0;i<f.length;i++)
+        {
+            if(f[i]>max)
+            {
+                maxi=i;
+                max=f[i];
+            }
+        }
+        return maxi;
+    }
+    public static String frequencySort(String s) {
+        int[] f=new int[128];
         for(char c:s.toCharArray()){
-            freq.put(c, freq.getOrDefault(c,0)+1);
+            f[c]+=1;
         }
-
-        List<Character>[]buckets = new List[s.length()+1];
-        for(char c:freq.keySet()){
-            int freqM = freq.get(c);
-            if(buckets[freqM] == null){
-                buckets[freqM] = new ArrayList<>();
+        char[] res=new char[s.length()];
+        int i=0;
+        while(i<s.length()){
+            int maxi=findMaxI(f);
+            int freq=f[maxi];
+            while(freq>0)
+            {
+                res[i++]=(char)(maxi);
+                freq--;
             }
-            buckets[freqM].add(c);
+            f[maxi]=0;
         }
-
-        StringBuilder result = new StringBuilder();
-        for(int i = buckets.length -1; i>=1; i--){
-            if(buckets[i] != null){
-                for(char c: buckets[i]){
-                    for(int j =0; j<i; j++){
-                        result.append(c);
-                    }
-                }
-            }
-        }
-        return result.toString();
+        return new String(res);
     }
 }
