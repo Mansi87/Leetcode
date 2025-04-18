@@ -10,46 +10,47 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null)
-            return head;
+        if(head==null || head.next==null)    return head;
 
-        ListNode middle = findMiddle(head);
-        ListNode right = middle.next;
-        middle.next = null;
-
-        ListNode leftSorted = sortList(head);
-        ListNode rightSorted = sortList(right);
-
-        return mergeTwoLists(leftSorted, rightSorted);
+        ListNode mid = findMiddle(head);
+        ListNode left = head;
+        ListNode right = mid.next;
+        mid.next = null;
+        left = sortList(left);
+        right = sortList(right);
+        return  merge2(left, right);
     }
 
-    private ListNode findMiddle(ListNode head) {
-        ListNode slow = head, fast = head.next;
-        while (fast != null && fast.next != null) {
+    public ListNode findMiddle(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while(fast.next!=null && fast.next.next!=null){
             slow = slow.next;
             fast = fast.next.next;
         }
         return slow;
     }
 
-    private ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode dummy = new ListNode(-1);
-        ListNode temp = dummy;
-
-        while (list1 != null && list2 != null) {
-            if (list1.val < list2.val) {
-                temp.next = list1;
-                list1 = list1.next;
-            } else {
-                temp.next = list2;
-                list2 = list2.next;
+    public ListNode merge2(ListNode list1, ListNode list2){
+        ListNode t1 = list1;
+        ListNode t2 = list2;
+        ListNode dummynode = new ListNode(-1);
+        ListNode temp = dummynode;
+        while(t1!=null && t2!=null){
+            if(t1.val<t2.val){
+                temp.next = t1;
+                temp = t1;
+                t1 = t1.next;
             }
-            temp = temp.next;
+            else{
+                temp.next = t2;
+                temp = t2;
+                t2 = t2.next;
+            }
         }
-
-        if (list1 != null) temp.next = list1;
-        else temp.next = list2;
-
-        return dummy.next;
+        if(t1!=null) temp.next = t1;
+        else  temp.next = t2;
+        
+        return dummynode.next;
     }
 }
