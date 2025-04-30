@@ -1,27 +1,26 @@
 class Solution {
     public int[] asteroidCollision(int[] arr) {
-       int[] st = new int[10000];
-       st[0] = arr[0];
+      
        int left = 0;
        int right = 1;
        while(right<arr.length){
         int curr = arr[right];
         if(curr<0){
-            while(left>=0 && st[left]>=0 && -curr>st[left]){
+            while(left>=0 && arr[left]>=0 && -curr>arr[left]){
                 left--;
             }
-            if(left==-1 || st[left]<0){
-             st[++left] = curr;
+            if(left==-1 || arr[left]<0){
+             arr[++left] = curr;
             } 
-            else if(st[left]== -curr){
+            else if(arr[left]== -curr){
              left--;
             }
         }
         else{
-            st[++left] = curr;
+            arr[++left] = curr;
         }
         right++;
        }
-       return Arrays.copyOfRange(st,0,left+1);
+       return Arrays.copyOfRange(arr,0,left+1);
     }
 }
