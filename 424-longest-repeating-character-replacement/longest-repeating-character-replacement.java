@@ -9,11 +9,11 @@ class Solution {
             maxf = Math.max(maxf, hash[c-'A']);
             if((r-l+1)-maxf > k){
                 hash[s.charAt(l) - 'A']--;
-                l=l+1;
+                l++;
             }
-           if((r-l+1)-maxf<=k){
-            maxlen = Math.max(maxlen, r-l+1);
-           } 
+            else{
+                maxlen = Math.max(maxlen, r-l+1);
+            } 
            r++;
         }
         return maxlen;
