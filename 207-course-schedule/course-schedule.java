@@ -24,11 +24,11 @@ class Solution {
             }
         }
 
-        List<Integer> topo = new ArrayList<>();
+        int cnt = 0 ;
         while(!q.isEmpty()){
             int node = q.peek();
             q.remove();
-            topo.add(node);
+            cnt++;
 
             for(int it: adj.get(node)){
                 indegree[it]--;
@@ -36,7 +36,7 @@ class Solution {
             }
         }
 
-        if(topo.size() == n) return true;
+        if(cnt == n) return true;
         return false;
     }
 }
